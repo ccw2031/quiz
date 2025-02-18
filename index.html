@@ -3,11 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
+    <title>Spongebob Quiz</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            color: rgb(40, 113, 249);
+        }
+         button {
+            background: ghostwhite;
+            border: none;
+            color: inherit;
+            padding: 8px 16px;
+            transition: all 1s;
+         }
+         button:hover {
+            background: lightblue;
+            cursor: pointer;
+            padding: 8px 24px;
+         }
+         button.clicked.correct{
+            background: lightgreen;
+            color: black;
+
+         }
+         button.clicked:not(.correct){
+            background: lightcoral;
+            color: white;
+         }
+         
+    </style>
 </head>
 <body>
-    <button> Option A </button>
-    <button> Option B </button>
-    <button> Option C </button>
+    <h1>Spongebob Trivia</h1>
+    <h4>Trivia only true fans can answer!</h4>
+    <div class="question">
+    <h3>What is the name of the bar that Spongebob tries to get into by acting tough?</h3>
+    <img src="https://cdn.idntimes.com/content-images/community/2023/06/image-3c9d8e2bf5f6460feacfbcf6f6c5da75.jpg" width="300">
+    <div>
+    <button onclick="check(this, 0)"> Bubble Dome </button>
+    <button onclick="check(this, 1)" class="correct"> Salty Spitoon </button>
+    <button onclick="check(this, 2)"> Weenie Hut Jrs </button>
+</div>
+</div>
+<div class="question">
+<h3>The best time to wear a striped sweater is?</h3>
+    <img src="https://vignette.wikia.nocookie.net/spongebob/images/f/f7/As_Seen_on_TV_152.png/revision/latest?cb=20191125210847" width="300">
+    <div>
+    <button onclick="check(this, 3)" class="correct"> All the time </button>
+    <button onclick="check(this, 4)" > Every month </button>
+    <button onclick="check(this, 5)"> Once a year </button>
+</div>
+</div>
+<div class="question">
+
+<h3>When Spongebob decides to live inside forever, what 3 items does he say are his friends?</h3>
+    <img src="https://i.ytimg.com/vi/qf2pAG3vQGg/maxresdefault.jpg" width="300">
+    <div>
+    <button onclick="check(this, 6)" class="correct"> A chip, used napkin, and a penny </button>
+    <button onclick="check(this, 7)" > Chewed up gum, a chip, and a nickel </button>
+    <button onclick="check(this, 8)"> A used napkin, a chip, and a nickel </button>
+</div>
+</div>
+<div class="question">
+<h3>What is the name of the seahorse Spongebob tries to keep as a pet?</h3>
+    <img src="https://i.pinimg.com/originals/db/04/c1/db04c17e0fb8dd3ffdf2963191364d20.png" width="300">
+    <div>
+    <button onclick="check(this, 9)" class="correct"> Mystery </button>
+    <button onclick="check(this, 10)" > No name </button>
+    <button onclick="check(this, 11)"> Junior </button>
+</div>
+</div>
+<div class="question">
+<h3>When Spongebob takes the wrong bus home, what deep sea trench city does he end up in?</h3>
+    <img src="https://i.kym-cdn.com/photos/images/original/001/626/256/3d6.png" width="300">
+    <div>
+    <button onclick="check(this, 12)"> Far-Out-Ville </button>
+    <button onclick="check(this, 13)" > Dullsvile </button>
+    <button onclick="check(this, 14)" class="correct"> Rock Bottom </button>
+</div>
+
+    <script>
+        let totalQuestions = document.querySelectorAll(".question").length;
+        let score = 0;
+        let answeredQuestions =0;
+        function check(button, index) {
+            let questionDiv = button.parentElement;
+            let buttons = questionDiv.querySelectorAll("button");
+
+            if (questionDiv.dataset.answered) return;  // Prevent multiple answers
+
+            questionDiv.dataset.answered = "true";  // Mark question as answered
+            answeredQuestions++;
+
+            buttons.forEach(btn => btn.disabled = true); 
+            button.classList.add("clicked");
+
+            if (button.classList.contains("correct")){
+                score++;
+
+            }
+            if (answeredQuestions === totalQuestions) {
+        let message = "";
+
+        // Assign different messages based on score
+        if (score === totalQuestions) {
+            message = "You're a Goofy Goober! 🌟";
+        } else if (score >= totalQuestions * 0.8) {
+            message = "Great job! You really know your stuff! 👍";
+        } else if (score >= totalQuestions * 0.5) {
+            message = "Not bad! But you might need to rewatch some episodes. 📺";
+        } else {
+            message = "Uh-oh... Looks like you need a Spongebob marathon! 🍍";
+        }
+
+        // Display final score with message
+        document.getElementById("score").innerText = `You got ${score} out of ${totalQuestions} correct! ${message}`;
+        document.getElementById("score").style.display = "block";
+    }
+}
+    </script>
+    <h2 id="score" style="display:none;"></h2>
 </body>
+
 </html>
