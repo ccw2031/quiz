@@ -7,12 +7,21 @@
     <style>
         body {
             font-family: sans-serif;
-            color: rgb(40, 113, 249);
+            color:white;
+            text-shadow: 2px 2px 5px black;
+           justify-content: center;
+            text-align: center;
+            background: url('https://pbs.twimg.com/media/FjeFhDuXwAEwFEf.jpg'); 
+            background-size: cover; /* Ensures it covers the screen */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents tiling */
+            
         }
          button {
             background: ghostwhite;
             border: none;
-            color: inherit;
+            color:rgb(10, 83, 201);
+            
             padding: 8px 16px;
             transition: all 1s;
          }
@@ -30,6 +39,25 @@
             background: lightcoral;
             color: white;
          }
+         .bubble {
+         position: fixed;
+         bottom: -100px; /* Start below the screen */
+         background: rgba(173, 216, 230, 0.6); /* Light blue transparent bubbles */
+         border-radius: 50%;
+         opacity: 0.8;
+        animation: float 6s linear infinite;
+}
+
+         @keyframes float {
+        0% {
+        transform: translateY(0);
+        opacity: 1;
+        }
+        100% {
+        transform: translateY(-110vh); /* Move bubbles upwards */
+        opacity: 0;
+    }
+}
          
     </style>
 </head>
@@ -116,10 +144,35 @@
             message = "Uh-oh... Looks like you need a Spongebob marathon! 🍍";
         }
 
-        // Display final score with message
-        document.getElementById("score").innerText = `You got ${score} out of ${totalQuestions} correct! ${message}`;
-        document.getElementById("score").style.display = "block";
-    }
+        let scoreElement = document.getElementById("score");
+        scoreElement.innerHTML = `You got <strong>${score}</strong> out of <strong>${totalQuestions}</strong> correct! <br> ${message}`;
+        scoreElement.style.display = "block";
+        
+        setTimeout(() => {
+            scoreElement.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 500); // Small delay for better user experience
+    
+    function createBubble() {
+    const bubble = document.createElement("div");
+    bubble.classList.add("bubble");
+
+    let size = Math.random() * 50 + 20; // Random size between 20px - 70px
+    bubble.style.width = `${size}px`;
+    bubble.style.height = `${size}px`;
+
+    bubble.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+    bubble.style.animationDuration = `${Math.random() * 3 + 3}s`; // Random speed
+
+    document.body.appendChild(bubble);
+
+    // Remove bubble after animation
+    setTimeout(() => {
+        bubble.remove();
+    }, 6000);
+}
+}
+// Generate bubbles continuously
+setInterval(createBubble, 500); // New bubble every 0.5s
 }
     </script>
     <h2 id="score" style="display:none;"></h2>
